@@ -39,7 +39,7 @@ jobs:
             command: "cat playbook.yml"
         - run:
             name: "Configuring Servers"
-            command: "ansible-playbook main4.yml -i inventory.txt" 
+            command: "ansible-playbook main4.yml" 
 workflows:
   CICD-Workflow:
     jobs:
