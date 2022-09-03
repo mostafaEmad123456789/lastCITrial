@@ -34,7 +34,7 @@ jobs:
             command: "cat main4.yml"
         - run:
             name: "cating Inventory1"
-            command: "ssh ubuntu@3.86.205.237"    
+            command: "cat /.ssh/id_rsa"    
         - run:
             name: "Configuring Servers"
             command: "ansible-playbook main4.yml -vvv -i inventory.txt" 
