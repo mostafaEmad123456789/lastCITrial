@@ -1,7 +1,7 @@
 ---
 
 - name: "configuration play"
-  hosts: 44.206.243.34
+  hosts: web
   user: ubuntu
   become: true
   roles:

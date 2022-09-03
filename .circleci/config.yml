@@ -16,7 +16,10 @@ jobs:
             command: "aws cloudformation deploy --stack-name Section4 --template-file cloudTemplate.yml --region us-east-1"
         - run:
             name: "Generating Inventory File"
-            command: sh get_instances_list.sh
+            command: "echo '[WEB]' > inventory.txt"
+        - run:
+            name: "Generating Inventory File"
+            command: "echo '44.201.49.75' >> inventory.txt"
         - save_cache:
             key: inventory
             paths: .
@@ -38,8 +41,11 @@ jobs:
             name: "cat playbook"
             command: "cat main4.yml"
         - run:
+            name: "cat Inventory"
+            command: "cat inventory.txt"    
+        - run:
             name: "Configuring Servers"
-            command: "ansible-playbook main4.yml" 
+            command: "ansible-playbook main4.yml -i inventory.txt" 
 workflows:
   CICD-Workflow:
     jobs:
