@@ -20,8 +20,8 @@ jobs:
         - image: python:3.7-alpine3.11
       steps:
         - checkout
-        #- add_ssh_keys:
-         #   fingerprints: ["34:2f:21:08:4b:27:6d:d0:0a:c1:bd:79:f1:3e:a0:d1"]
+        - add_ssh_keys:
+            fingerprints: ["34:2f:21:08:4b:27:6d:d0:0a:c1:bd:79:f1:3e:a0:d1"]
         - run:
             name: "Installing Ansible"
             command: apk add --update ansible
@@ -29,14 +29,14 @@ jobs:
             name: "Installing Ansible"
             command: apk add --update openssh
         - run:
-            name: "cat playbook"
+            name: "cating playbook"
             command: "cat main4.yml"
         - run:
             name: "cating Inventory1"
-            command: "ssh ubuntu@3.86.205.237 -i try.pem"    
+            command: "ssh ubuntu@3.86.205.237"    
         - run:
             name: "Configuring Servers"
-            command: "ansible-playbook main4.yml -vvv -i inventory.txt --private-key try.pem" 
+            command: "ansible-playbook main4.yml -vvv -i inventory.txt" 
 workflows: 
   CICD-Workflow: 
     jobs:
