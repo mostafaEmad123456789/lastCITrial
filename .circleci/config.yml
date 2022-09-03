@@ -25,7 +25,7 @@ jobs:
             command: "echo '[web]' > inventory.txt"
         - run:
             name: "Generating Inventory File"
-            command: "echo 'ec2-44-206-243-34.compute-1.amazonaws.com' >> inventory.txt" 
+            command: "echo '44.201.49.75' >> inventory.txt" 
         - add_ssh_keys:
             fingerprints: ["39:72:01:15:d1:d6:bd:3d:74:a7:62:9f:c3:9b:ca:68"]
         - run:
