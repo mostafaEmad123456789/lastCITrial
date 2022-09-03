@@ -29,7 +29,7 @@ jobs:
             name: "cat playbook"
             command: "cat main4.yml"
         - run:
-            name: "cat Inventory"
+            name: "cating Inventory1"
             command: "ssh ubuntu@3.86.205.237 -i try.pem"    
         - run:
             name: "Configuring Servers"
