@@ -4,6 +4,16 @@ orbs:
 
   aws-cli: circleci/aws-cli@2.0.3
 
+commands:
+   destroy_environment:
+     steps:
+       - run:
+           name: Destroy environment
+           when: on_fail
+           command: |
+             aws cloudformation delete-stack --stack-name stack-${CIRCLE_WORKFLOW_ID:0:7}
+
+
 jobs:
 
     Create-Infrastructure:
@@ -13,7 +23,7 @@ jobs:
         - checkout
         - run: 
             name: "Creating Cloudformation Stack"
-            command: "aws cloudformation deploy --stack-name Section4 --template-file cloudTemplate.yml --region us-east-1"
+            command: "aws cloudformation deploy --stack-name stack-${CIRCLE_WORKFLOW_ID:0:7} --template-file cloudTemplate.yml --region us-east-1"
 
     Configure-Infrastructure:
       docker: 
@@ -51,10 +61,22 @@ jobs:
               else
                 return 1
               fi  
+    smoke_test_fail:
+      docker:
+        - image: alpine:latest
+      steps:
+        - run:
+            name: Test job
+            command:  return 1
+        - destroy_environment
+    
 workflows: 
   CICD-Workflow: 
     jobs:
-      - smoke_test
+      - Create-Infrastructure
+      - smoke_test_fail:
+        requires: 
+          - Create-Infrastructure
       #- Create-Infrastructure
       #- Configure-Infrastructure:
       #    requires: 
