@@ -35,10 +35,27 @@ jobs:
         - run: 
             name: "Configuring Servers"
             command: "ansible-playbook main4.yml -i inventory.txt" 
+    smoke_test:
+      docker:
+        - image: alpine:latest
+      steps:
+        - run: apk add --update curl
+        - run:
+            name: smoke test
+            command: |
+              URL="https://blog.udacity.com/"
+              # Test if website exists
+              if curl -s --head ${URL} 
+              then
+                return 0
+              else
+                return 1
+              fi  
 workflows: 
   CICD-Workflow: 
     jobs:
-      - Create-Infrastructure
-      - Configure-Infrastructure:
-          requires: 
-            - Create-Infrastructure
+      - smoke_test
+      #- Create-Infrastructure
+      #- Configure-Infrastructure:
+      #    requires: 
+      #      - Create-Infrastructure
